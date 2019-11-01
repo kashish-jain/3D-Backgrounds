@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
-let scene, camera, renderer, container, objectList, lighList, light1, light2, light3, light4, light5, light6;
+let scene, camera, renderer, container, objectList, lighList, light1, light2, light3, light4, light5, light6, time, group;
+time = 0;
 objectList = [];
 lightList = [];
 container = document.getElementById("canvas");
@@ -11,7 +12,7 @@ function init() {
     container.appendChild(renderer.domElement);
     testing();
     createLights();
-    addObjects();
+    addObjects("box");
     renderer.setAnimationLoop(() => {
         update();
         render();
@@ -21,7 +22,7 @@ function init() {
 function createCamera() {
     let aspectRatio = container.clientWidth/container.clientHeight;
     camera = new THREE.PerspectiveCamera(50, aspectRatio, 1, 300);
-    camera.position.set( 0, 15, 150 );
+    camera.position.set( 0, 0, 150 );
     camera.lookAt( 0, 0, 0 );
 }
 
@@ -30,18 +31,21 @@ function createRenderer() {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 }
-
+let newt = 0;
 function update() {
+    newt += 0.01;
     objectRotation();
     slowVerticalCircularLights();   
-
+    camera.position.x = Math.sin( newt * 0.1 ) * 150;
+    camera.position.z = Math.cos( newt * 0.1 ) * 150;
+    camera.lookAt( 0, 0, 0 );
 }
 
 function objectRotation() {
     objectList.forEach( (obj) => {
-        obj.rotation.x += (Math.floor(Math.random() * 10))/100;
-        obj.rotation.y += (Math.floor(Math.random() * 10))/100;
-        obj.rotation.z += (Math.floor(Math.random() * 10))/100;
+        obj.rotation.x += (Math.floor(Math.random() * 10))/1000;
+        obj.rotation.y += (Math.floor(Math.random() * 10))/1000;
+        obj.rotation.z += (Math.floor(Math.random() * 10))/1000;
     });
 }
 
@@ -66,10 +70,9 @@ function slowCirclarHorizontalLights() {
     light6.position.x = Math.cos( time * 0.7 ) * d;
     light6.position.z = Math.cos( time * 0.5 ) * d;
 }
-
 function slowVerticalCircularLights() {
-    var time = Date.now() * 0.00025;
-    var d = 30;
+    time += 0.08;
+    var d = 50;
     light1.position.y = Math.sin( time * 0.7 ) * d;
     light1.position.z = Math.cos( time * 0.3 ) * d;
 
@@ -130,9 +133,23 @@ function testing() {
     // scene.add( cube );
 }
 
-function addObjects() {
-    var objectGeometry = new THREE.TorusBufferGeometry( 1.5, 0.4, 8, 16 );
+function addObjects(type) {
+    let objectGeometry;
+    switch(type) {
+        case "box":
+            objectGeometry = new THREE.BoxBufferGeometry(2,2,2);
+            break;
+        case "torus":
+            objectGeometry = new THREE.TorusBufferGeometry(1.5, 0.4, 8, 16);
+            break;
+        case "sphere":
+            objectGeometry = new THREE.SphereBufferGeometry(1,32, 32);
+            break;
+        default:
+            console.log("Provide valid Geometry");
+    }
     var objectMaterial = new THREE.MeshStandardMaterial( { color: 0xffffff, roughness: 0.5, metalness: 1.0 } );
+    group = new THREE.Group();
     for ( let i = 0; i < 2000; i ++ ) {
 
         let mesh = new THREE.Mesh( objectGeometry, objectMaterial );
@@ -144,13 +161,13 @@ function addObjects() {
         mesh.rotation.y = 3.14 * ( 0.5 - Math.random() );
         mesh.rotation.x = 3.14 * ( 0.5 - Math.random() );
         objectList.push(mesh);
+        group.add(mesh);
         mesh.updateMatrix();
         scene.add( mesh );
     }
 }
 
 function createControls() {
-
 }
 
 function render() {
