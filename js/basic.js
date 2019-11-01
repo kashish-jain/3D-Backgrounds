@@ -32,33 +32,62 @@ function createRenderer() {
 }
 
 function update() {
-    // updating objects
+    objectRotation();
+    slowVerticalCircularLights();   
+
+}
+
+function objectRotation() {
     objectList.forEach( (obj) => {
         obj.rotation.x += (Math.floor(Math.random() * 10))/100;
         obj.rotation.y += (Math.floor(Math.random() * 10))/100;
         obj.rotation.z += (Math.floor(Math.random() * 10))/100;
     });
+}
 
-        var time = Date.now() * 0.00025;
-        var d = 100;
+function slowCirclarHorizontalLights() {
+    var time = Date.now() * 0.00025;
+    var d = 100;
+    light1.position.x = Math.sin( time * 0.7 ) * d;
+    light1.position.z = Math.cos( time * 0.3 ) * d;
 
-        light1.position.x = Math.sin( time * 0.7 ) * d;
-        light1.position.z = Math.cos( time * 0.3 ) * d;
+    light2.position.x = Math.cos( time * 0.3 ) * d;
+    light2.position.z = Math.sin( time * 0.7 ) * d;
 
-        light2.position.x = Math.cos( time * 0.3 ) * d;
-        light2.position.z = Math.sin( time * 0.7 ) * d;
+    light3.position.x = Math.sin( time * 0.7 ) * d;
+    light3.position.z = Math.sin( time * 0.5 ) * d;
 
-        light3.position.x = Math.sin( time * 0.7 ) * d;
-        light3.position.z = Math.sin( time * 0.5 ) * d;
+    light4.position.x = Math.sin( time * 0.3 ) * d;
+    light4.position.z = Math.sin( time * 0.5 ) * d;
 
-        light4.position.x = Math.sin( time * 0.3 ) * d;
-        light4.position.z = Math.sin( time * 0.5 ) * d;
+    light5.position.x = Math.cos( time * 0.3 ) * d;
+    light5.position.z = Math.sin( time * 0.5 ) * d;
 
-        light5.position.x = Math.cos( time * 0.3 ) * d;
-        light5.position.z = Math.sin( time * 0.5 ) * d;
+    light6.position.x = Math.cos( time * 0.7 ) * d;
+    light6.position.z = Math.cos( time * 0.5 ) * d;
+}
 
-        light6.position.x = Math.cos( time * 0.7 ) * d;
-        light6.position.z = Math.cos( time * 0.5 ) * d;
+function slowVerticalCircularLights() {
+    var time = Date.now() * 0.00025;
+    var d = 30;
+    light1.position.y = Math.sin( time * 0.7 ) * d;
+    light1.position.z = Math.cos( time * 0.3 ) * d;
+
+    light2.position.y = Math.cos( time * 0.3 ) * d;
+    light2.position.z = Math.sin( time * 0.7 ) * d;
+
+    light3.position.y = Math.sin( time * 0.7 ) * d;
+    light3.position.z = Math.sin( time * 0.5 ) * d;
+
+    light4.position.y = Math.sin( time * 0.3 ) * d;
+    light4.position.z = Math.sin( time * 0.5 ) * d;
+
+    light5.position.y = Math.cos( time * 0.3 ) * d;
+    light5.position.z = Math.sin( time * 0.5 ) * d;
+
+    light6.position.y = Math.cos( time * 0.7 ) * d;
+    light6.position.z = Math.cos( time * 0.5 ) * d;
+
 }
 
 function createLights() {
