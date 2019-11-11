@@ -23,12 +23,13 @@ function init() {
     createCamera();
     createRenderer();
     container.appendChild(renderer.domElement);
-    testing();
+    testing("./textures/0.jpg");
+    testing("./textures/1.png");
     let lightList = addLights(scene);
-    let objectList = addObjects(scene, "box");
-    let smokeParticles = addSmoke(scene);
+    let objectList = addObjects(scene, "ox");
+    // let smokeParticles = addSmoke(scene);
     renderer.setAnimationLoop(() => {
-        update(lightList, objectList, smokeParticles);
+        update(lightList, objectList);
         render();
     });
 }
@@ -49,19 +50,56 @@ function createRenderer() {
 let newt = 0;
 let lightoffset = 0;
 
-function update(lightList, objectList, smokeParticles) {
-    evolveSmoke(smokeParticles);
+function update(lightList, objectList) {
+    // evolveSmoke(smokeParticles);
     newt += 0.01;
     lightoffset += 0.01;
-    objectRotation(objectList);
-    rotateLights(lightoffset, 75, "vertical", lightList);
     // camera.position.x = Math.sin(newt * 0.1) * 150;
     // camera.position.z = Math.cos( newt * 0.1 ) * 150;
     // camera.lookAt( 0, 0, 0 );
+
+    let particleSystem = scene.getObjectByName('particlesystem');
+    scene.traverse(function(child){
+        if (child.name == 'particlesystem') {
+            let particleSystem = child;
+            particleSystem.geometry.vertices.forEach((particle) => {
+                // particle.x += Math.random()/10 - 0.05;
+                // particle.y += Math.random()/10 - 0.05;
+                particle.z += Math.random()/10 + 0.05;
+                if(particle.z > 150) {
+                    particle.z = -100;
+                }
+            })
+            particleSystem.geometry.verticesNeedUpdate = true;
+        }
+    })
+
 }
 
-function testing() {
+function testing(path) {
+    let particleGeo = new THREE.Geometry();
+    let particleMat = new THREE.PointsMaterial({
+        color: 'rgb(0,153,0)',
+        size: 10,
+        map: new THREE.TextureLoader().load(path),
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
 
+    let particlesCount = 500;
+    let particleDistance = 200;
+
+    for(let i = 0; i < particlesCount; ++i) {
+        let posX = (Math.random() - 0.5) * particleDistance;
+        let posY = (Math.random() - 0.5) * particleDistance;
+        let posZ = (Math.random() - 0.5) * particleDistance;
+        let particle = new THREE.Vector3(posX,posY,posZ);
+        particleGeo.vertices.push(particle);
+    }
+    let particleSystem = new THREE.Points(particleGeo, particleMat);
+    particleSystem.name = 'particlesystem'
+    scene.add(particleSystem);
 }
 
 function createControls() {}
