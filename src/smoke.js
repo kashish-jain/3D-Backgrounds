@@ -1,5 +1,8 @@
 // This file is for controlling of smoke
 // 0x00dddd
+import * as THREE from "three"
+
+
 function addSmoke(scene) {
     // let light = new THREE.DirectionalLight(0xffffff, 0.5);
     // light.position.set(-1, 0, 1);

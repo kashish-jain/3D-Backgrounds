@@ -1,4 +1,5 @@
 // This file is for creating and handling objects in the scene
+import * as THREE from "three"
 
 function addObjects(scene, type) {
     let objectGeometry;

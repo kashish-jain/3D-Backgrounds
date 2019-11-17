@@ -8,14 +8,26 @@ export default class Renderer {
   scene: THREE.Scene
   camera: THREE.Camera
   update: any
+  container: any
+  lightList: any
+  objectList: any
+  smokeParticles:any
 
-  constructor(scene: THREE.Scene, camera: THREE.Camera, update: any) {
+  constructor(scene: THREE.Scene, camera: THREE.Camera, update: any, container: any, lightList: any, objectList: any, smokeParticles:any) {
     this.scene = scene;
     this.camera = camera;
     this.update = update;
+    this.container = container;
+    
+
+    // will remove these
+    this.lightList = lightList;
+    this.objectList = objectList;
+    this.smokeParticles = smokeParticles;
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(container.clientWidth, container.clientHeight);
   }
 
   setSize(width : number, height : number) {
@@ -23,9 +35,9 @@ export default class Renderer {
   }
 
   render() {
-    // Callback to prompt for scene updates that depend on the current camera
-    // position
-    this.update();
+    this.update(this.lightList, this.objectList, this.smokeParticles);
+
+    this.renderer.clear();
 
     this.renderer.render(this.scene, this.camera);
 

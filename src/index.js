@@ -1,3 +1,5 @@
+import * as THREE from "three"
+
 import {
     addObjects,
     objectRotation
@@ -22,18 +24,22 @@ function init() {
     scene.background = new THREE.Color('black');
     createCamera();
     // createRenderer();
-    container.appendChild(renderer.domElement);
+    // container.appendChild(renderer.domElement);
     testing("./textures/0.jpg");
     testing("./textures/1.png");
     let lightList = addLights(scene);
-    let objectList = addObjects(scene, "ox");
+    let objectList = addObjects(scene, "box");
     let smokeParticles = addSmoke(scene);
-    let newUpdateTesting = update(lightList,objectList, smokeParticles);
+    let newUpdateTesting = ((lightList, objectList, smokeParticles) => {
+        update(lightList, objectList, smokeParticles);
+    });
     // renderer.setAnimationLoop(() => {
     //     update(lightList, objectList, smokeParticles);
     //     render();
     // });
-    renderer = new Renderer(scene, camera, newUpdateTesting)
+    renderer = new Renderer(scene, camera, newUpdateTesting, container)
+    container.appendChild(renderer.renderer.domElement);
+    renderer.render();
 }
 
 function createCamera() {
@@ -53,7 +59,7 @@ let newt = 0;
 let lightoffset = 0;
 
 function update(lightList, objectList, smokeParticles) {
-    evolveSmoke(smokeParticles);
+    // evolveSmoke(smokeParticles);
     newt += 0.01;
     lightoffset += 0.01;
     // camera.position.x = Math.sin(newt * 0.1) * 150;

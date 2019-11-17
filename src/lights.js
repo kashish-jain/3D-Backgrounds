@@ -1,4 +1,6 @@
 //this file is for controlling the position of lights
+import * as THREE from "three"
+
 
 function addLights(scene) {
     let colour1 = 0xff0040;

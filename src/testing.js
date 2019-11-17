@@ -1,6 +1,9 @@
 var camera, scene, renderer,
     geometry, material, mesh;
  
+import * as THREE from "three"
+
+
 init();
 animate(); 
 
