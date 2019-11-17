@@ -11,7 +11,7 @@ import {
     evolveSmoke
 } from "./smoke.js"
 // import {addInteractivity} from "./mouseEffects.js"
-
+import Renderer from "./renderer"
 
 let scene, camera, renderer, container;
 let mouse = new THREE.Vector2();
@@ -21,17 +21,19 @@ function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color('black');
     createCamera();
-    createRenderer();
+    // createRenderer();
     container.appendChild(renderer.domElement);
     testing("./textures/0.jpg");
     testing("./textures/1.png");
     let lightList = addLights(scene);
     let objectList = addObjects(scene, "ox");
-    // let smokeParticles = addSmoke(scene);
-    renderer.setAnimationLoop(() => {
-        update(lightList, objectList);
-        render();
-    });
+    let smokeParticles = addSmoke(scene);
+    let newUpdateTesting = update(lightList,objectList, smokeParticles);
+    // renderer.setAnimationLoop(() => {
+    //     update(lightList, objectList, smokeParticles);
+    //     render();
+    // });
+    renderer = new Renderer(scene, camera, newUpdateTesting)
 }
 
 function createCamera() {
@@ -50,8 +52,8 @@ function createRenderer() {
 let newt = 0;
 let lightoffset = 0;
 
-function update(lightList, objectList) {
-    // evolveSmoke(smokeParticles);
+function update(lightList, objectList, smokeParticles) {
+    evolveSmoke(smokeParticles);
     newt += 0.01;
     lightoffset += 0.01;
     // camera.position.x = Math.sin(newt * 0.1) * 150;

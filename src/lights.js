@@ -1,7 +1,5 @@
 //this file is for controlling the position of lights
 
-
-
 function addLights(scene) {
     let colour1 = 0xff0040;
     let sphere = new THREE.SphereBufferGeometry(0.25, 16, 8);

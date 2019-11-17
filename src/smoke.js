@@ -1,12 +1,12 @@
 // This file is for controlling of smoke
-
+// 0x00dddd
 function addSmoke(scene) {
     // let light = new THREE.DirectionalLight(0xffffff, 0.5);
     // light.position.set(-1, 0, 1);
     // scene.add(light);
     let smokeTexture = new THREE.TextureLoader().load('./textures/Smoke-Element.png');
     let smokeMaterial = new THREE.MeshBasicMaterial({
-        color: 0x00dddd,
+        color: 0xffffff,
         map: smokeTexture,
         transparent: true
     });

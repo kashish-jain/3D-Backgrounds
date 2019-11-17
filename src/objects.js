@@ -1,6 +1,5 @@
 // This file is for creating and handling objects in the scene
 
-
 function addObjects(scene, type) {
     let objectGeometry;
     switch(type) {
