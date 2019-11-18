@@ -1,14 +1,14 @@
 import * as THREE from "three";
 import RandomObjects from "./randomObjects"
 import Smoke from "./smoke"
-
+import BinaryNumbers from "./binaryNumbers"
 export default class Renderer {
 
   renderer: THREE.WebGLRenderer
-  obj: Smoke | RandomObjects
+  obj: Smoke | RandomObjects |BinaryNumbers
 
 
-  constructor(obj: Smoke | RandomObjects) {
+  constructor(obj: Smoke | RandomObjects | BinaryNumbers) {
     this.obj = obj;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -17,9 +17,6 @@ export default class Renderer {
 
 
   render() {
-
-    this.renderer.clear();
-
     this.renderer.render(this.obj.scene, this.obj.camera);
     this.obj.update();
 

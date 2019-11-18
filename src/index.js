@@ -12,6 +12,7 @@ import Smoke from "./smoke"
 // import {addInteractivity} from "./mouseEffects.js"
 import RandomObjects from "./randomObjects";
 import Renderer from "./renderer";
+import BinaryNumbers from "./binaryNumbers"
 
 let scene, camera, renderer, container;
 let mouse = new THREE.Vector2();
@@ -36,7 +37,8 @@ function init() {
     //     render();
     // }); 
 
-    new RandomObjects("box", "horizontal", "black", true);
+    // new RandomObjects("box", "horizontal", "black", true);
+    new BinaryNumbers();
     // new Smoke("pink", true);
         // renderer = new Renderer(obj.scene, obj.camera, obj, container)
     // container.appendChild(renderer.renderer.domElement);
