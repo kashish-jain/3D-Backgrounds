@@ -7,23 +7,16 @@ export default class Renderer {
   renderer: THREE.WebGLRenderer
   scene: THREE.Scene
   camera: THREE.Camera
-  update: any
+  obj:any
   container: any
-  lightList: any
-  objectList: any
-  smokeParticles:any
 
-  constructor(scene: THREE.Scene, camera: THREE.Camera, update: any, container: any, lightList: any, objectList: any, smokeParticles:any) {
+
+  constructor(scene: THREE.Scene, camera: THREE.Camera, obj: any, container: any) {
     this.scene = scene;
     this.camera = camera;
-    this.update = update;
+    this.obj = obj;
     this.container = container;
     
-
-    // will remove these
-    this.lightList = lightList;
-    this.objectList = objectList;
-    this.smokeParticles = smokeParticles;
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -35,11 +28,11 @@ export default class Renderer {
   }
 
   render() {
-    this.update(this.lightList, this.objectList, this.smokeParticles);
 
     this.renderer.clear();
 
     this.renderer.render(this.scene, this.camera);
+    this.obj.update();
 
     requestAnimationFrame(()=>{this.render();});
   }

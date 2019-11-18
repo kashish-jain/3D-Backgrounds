@@ -8,38 +8,41 @@ import {
     addLights,
     rotateLights
 } from "./lights.js"
-import {
-    addSmoke,
-    evolveSmoke
-} from "./smoke.js"
+import Smoke from "./smoke"
 // import {addInteractivity} from "./mouseEffects.js"
-import Renderer from "./renderer"
+import RandomObjects from "./randomObjects";
+import Renderer from "./renderer";
 
 let scene, camera, renderer, container;
 let mouse = new THREE.Vector2();
 container = document.getElementById("canvas");
 
 function init() {
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color('black');
-    createCamera();
+    // scene = new THREE.Scene();
+    // scene.background = new THREE.Color('black');
+    // createCamera();
     // createRenderer();
     // container.appendChild(renderer.domElement);
-    testing("./textures/0.jpg");
-    testing("./textures/1.png");
-    let lightList = addLights(scene);
-    let objectList = addObjects(scene, "box");
-    let smokeParticles = addSmoke(scene);
-    let newUpdateTesting = ((lightList, objectList, smokeParticles) => {
-        update(lightList, objectList, smokeParticles);
-    });
+    // testing("./textures/0.jpg");
+    // testing("./textures/1.png");
+    // let lightList = addLights(scene);
+    // let objectList = addObjects(scene, "box");
+    // let smokeParticles = addSmoke(scene);
+    // let newUpdateTesting = ((lightList, objectList, smokeParticles) => {
+    //     update(lightList, objectList, smokeParticles);
+    // });
     // renderer.setAnimationLoop(() => {
     //     update(lightList, objectList, smokeParticles);
     //     render();
-    // });
-    renderer = new Renderer(scene, camera, newUpdateTesting, container)
-    container.appendChild(renderer.renderer.domElement);
-    renderer.render();
+    // }); 
+
+    // new RandomObjects("box", "horizontal", "black", true);
+    new Smoke("pink", true);
+        // renderer = new Renderer(obj.scene, obj.camera, obj, container)
+    // container.appendChild(renderer.renderer.domElement);
+    // renderer.render();
+
+
 }
 
 function createCamera() {
