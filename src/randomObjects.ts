@@ -15,8 +15,6 @@ import Renderer from "./renderer";
 
 
 let lightoffset = 0;
-let container = document.getElementById("canvas");
-
 
 export default class RandomObjects {
 
@@ -26,23 +24,24 @@ export default class RandomObjects {
     objectList: THREE.Mesh[]
     lightDirection: string
     cameraRotation: boolean
+    container: HTMLElement
 
-    constructor(shape: string, lightsDirection: string, backgroundColor: string="black", cameraRotation: boolean = true) {
+    constructor(shape: string, lightsDirection: string, backgroundColor: string="black", cameraRotation: boolean = true, elementId: string = "canvas") {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(backgroundColor);
         this.lightList = addLights(this.scene);
         this.objectList = addObjects(this.scene, shape);
         this.lightDirection = lightsDirection
+        this.container = document.getElementById("canvas");
         this.createCamera();
         this.cameraRotation = cameraRotation;
-        let renderer = new Renderer(this.scene, this.camera, this, container);
-        container.appendChild(renderer.renderer.domElement);
+        let renderer = new Renderer(this);
+        this.container.appendChild(renderer.renderer.domElement);
         renderer.render();
-
     }
 
     createCamera() {
-        let aspectRatio = container.clientWidth / container.clientHeight;
+        let aspectRatio = this.container.clientWidth / this.container.clientHeight;
         this.camera = new THREE.PerspectiveCamera(50, aspectRatio, 1, 300);
         this.camera.position.set(0, 0, 150);
         this.camera.lookAt(0, 0, 0);

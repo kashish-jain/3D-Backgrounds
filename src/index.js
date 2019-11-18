@@ -36,8 +36,8 @@ function init() {
     //     render();
     // }); 
 
-    // new RandomObjects("box", "horizontal", "black", true);
-    new Smoke("pink", true);
+    new RandomObjects("box", "horizontal", "black", true);
+    // new Smoke("pink", true);
         // renderer = new Renderer(obj.scene, obj.camera, obj, container)
     // container.appendChild(renderer.renderer.domElement);
     // renderer.render();

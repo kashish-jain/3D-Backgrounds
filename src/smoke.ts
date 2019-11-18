@@ -2,28 +2,27 @@
 import * as THREE from "three"
 import Renderer from "./renderer"
 
-let container = document.getElementById("canvas");
-
 export default class Smoke {
     scene: THREE.Scene
     camera: THREE.PerspectiveCamera
     smokeParticles: THREE.Mesh[]
+    container: HTMLElement
 
-    constructor(color: string | number | THREE.Color = 0x00dddd, cameraMovement: boolean = true) {
+    constructor(color: string | number | THREE.Color = 0x00dddd, cameraMovement: boolean = true, elementId: string = "canvas") {
         this.scene = new THREE.Scene;
+        this.container = document.getElementById(elementId);
         this.createCamera();
-
         //Adding smoke to scene
         this.smokeParticles = addSmoke(this.scene, color);
 
         // Creating renderer and rendering
-        let renderer = new Renderer(this.scene, this.camera, this, container);
-        container.appendChild(renderer.renderer.domElement);
+        let renderer = new Renderer(this);
+        this.container.appendChild(renderer.renderer.domElement);
         renderer.render();
     }
 
     createCamera() {
-        let aspectRatio = container.clientWidth / container.clientHeight;
+        let aspectRatio = this.container.clientWidth / this.container.clientHeight;
         this.camera = new THREE.PerspectiveCamera(50, aspectRatio, 1, 300);
         this.camera.position.set(0, 0, 150);
         this.camera.lookAt(0, 0, 0);
