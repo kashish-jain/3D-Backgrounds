@@ -30,8 +30,10 @@ export default class BinaryNumbers {
     let particleSystem = this.scene.getObjectByName("particlesystem");
     this.scene.traverse(function(child) {
       if (child.name == "particlesystem") {
-        let particleSystem = child;
-        particleSystem.geometry.vertices.forEach((particle: any) => {
+                //typecasting, otherwise typescript complains
+        let particleSystem = <THREE.Points>child;
+        let geo = <THREE.Geometry>particleSystem.geometry
+        geo.vertices.forEach((particle: any) => {
           // particle.x += Math.random()/10 - 0.05;
           // particle.y += Math.random()/10 - 0.05;
           particle.z += Math.random() / 10 + 0.05;
@@ -39,7 +41,7 @@ export default class BinaryNumbers {
             particle.z = -100;
           }
         });
-        particleSystem.geometry.verticesNeedUpdate = true;
+        geo.verticesNeedUpdate = true;
       }
     });
   }
