@@ -18,6 +18,7 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
+    library: 'main',
     path: path.resolve(__dirname, 'dist'),
   }, 
   plugins : [
