@@ -48,7 +48,20 @@ export default class MouseEffects {
       let points_inside = GeometryUtils.randomPointsInGeometry(textGeo, 10000);
       let newGeo = new THREE.Geometry();
       createVertices(newGeo, points_inside);
-      let textMaterial = new THREE.PointsMaterial({ color: 0x3277a8 });
+      var colors = [];
+      for( var i = 0; i < newGeo.vertices.length; i++ ) {
+      
+          // random color
+          colors[i] = new THREE.Color();
+          colors[i].setHSL( Math.random(), 0.5, 0.5 );
+  
+      }
+      newGeo.colors = colors;
+
+
+      let textMaterial = new THREE.PointsMaterial({
+        vertexColors: THREE.VertexColors
+      });
       particleSystem = new THREE.Points(newGeo, textMaterial);
       particleSystem.name = "text";
       scene.add(particleSystem);
