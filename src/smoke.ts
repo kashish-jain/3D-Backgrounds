@@ -2,6 +2,7 @@
 import * as THREE from "three"
 import Renderer from "./renderer"
 
+let renderer: Renderer;
 export default class Smoke {
     scene: THREE.Scene
     camera: THREE.PerspectiveCamera
@@ -16,9 +17,13 @@ export default class Smoke {
         this.smokeParticles = addSmoke(this.scene, color);
 
         // Creating renderer and rendering
-        let renderer = new Renderer(this);
+        renderer = new Renderer(this);
         this.container.appendChild(renderer.renderer.domElement);
         renderer.render();
+    }
+
+    stopAnimation() {
+        renderer.stopAnimation();
     }
 
     createCamera() {

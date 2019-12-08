@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Renderer from "./renderer";
 import { GeometryUtils } from "three/examples/jsm/utils/GeometryUtils";
 
+let renderer: Renderer;
 export default class MouseEffects {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
@@ -15,10 +16,13 @@ export default class MouseEffects {
     this.addText(this.scene);
 
     // Creating renderer and rendering
-    let renderer = new Renderer(this);
+    renderer = new Renderer(this);
     this.container.appendChild(renderer.renderer.domElement);
-    renderer.render();
-    
+    renderer.render(); 
+  }
+
+  stopAnimation() {
+    renderer.stopAnimation();
   }
 
   createCamera() {
