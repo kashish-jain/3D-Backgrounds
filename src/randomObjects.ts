@@ -13,9 +13,8 @@ import {
 
 import Renderer from "./renderer";
 
-
 let lightoffset = 0;
-
+let renderer: Renderer;
 export default class RandomObjects {
 
     scene: THREE.Scene
@@ -35,9 +34,13 @@ export default class RandomObjects {
         this.container = document.getElementById("canvas");
         this.createCamera();
         this.cameraRotation = cameraRotation;
-        let renderer = new Renderer(this);
+        renderer = new Renderer(this);
         this.container.appendChild(renderer.renderer.domElement);
         renderer.render();
+    }
+
+    stopAnimation() {
+        renderer.stopAnimation();
     }
 
     createCamera() {

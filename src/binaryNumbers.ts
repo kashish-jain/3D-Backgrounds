@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Renderer from "./renderer";
 
+let renderer: Renderer
 export default class BinaryNumbers {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
@@ -14,9 +15,13 @@ export default class BinaryNumbers {
     adding("./textures/1.png", this.scene);
 
     // Creating renderer and rendering
-    let renderer = new Renderer(this);
+    renderer = new Renderer(this);
     this.container.appendChild(renderer.renderer.domElement);
     renderer.render();
+  }
+
+  stopAnimation() {
+    renderer.stopAnimation();
   }
 
   createCamera() {
@@ -30,9 +35,9 @@ export default class BinaryNumbers {
     let particleSystem = this.scene.getObjectByName("particlesystem");
     this.scene.traverse(function(child) {
       if (child.name == "particlesystem") {
-                //typecasting, otherwise typescript complains
+        //typecasting, otherwise typescript complains
         let particleSystem = <THREE.Points>child;
-        let geo = <THREE.Geometry>particleSystem.geometry
+        let geo = <THREE.Geometry>particleSystem.geometry;
         geo.vertices.forEach((particle: any) => {
           // particle.x += Math.random()/10 - 0.05;
           // particle.y += Math.random()/10 - 0.05;
